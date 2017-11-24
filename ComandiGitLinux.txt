@@ -1,0 +1,12 @@
+Aggiungere un file:
+	$git add NomeFile
+	$git commit -m DescrizioneModifica
+	$git push
+
+Per tornare a prima della push:
+	$git reset -hard
+
+Per rimuovere il file:
+	$git rm NomeFile
+	$git commit -m DescrizioneModifica
+	$git push
