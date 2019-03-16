@@ -1,0 +1,21 @@
+<html>
+  <head>
+      <title>Login</title>
+  </head>
+
+  <body>
+      <div id= "login">
+          <h2>Clicca qui per fare il login su Spotify e ottenere i concerti</h2>
+          <button id="login-button">Login con Spotify</button>
+      </div>
+  </body>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script>
+      (function() {
+        document.getElementById('login-button').addEventListener('click', function() {
+            window.location = 'http://localhost:8888/auth/spotify';
+          }, false);
+      })();
+  </script>
+</html>
