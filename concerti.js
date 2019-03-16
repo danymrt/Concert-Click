@@ -1,10 +1,10 @@
 //inserire nome utente nella pagina cerca.html
-//bottone carino
+//bottone 
 //far in modo che quando si attivi il server parta direttamente
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = '' ;
+var key = 'appKey' ;
 var cantante='elisa';
 var id;
 var idEvent;
