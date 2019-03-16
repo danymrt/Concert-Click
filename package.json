@@ -1,0 +1,12 @@
+{
+  "name": "artevents",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "passport": "~0.2.0",
+    "passport-spotify": "^1.0.1",
+    "request": "^2.88.0",
+    "templatesjs": "^2.0.0"
+  }
+}
