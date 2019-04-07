@@ -4,12 +4,12 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'j3fUYN8FLd3NZ95r' ;
+var key = 'appkey' ;
 //var cantante='elisa';
 var id;
 var idEvent;
 var app = express();
-var server = require('./server');
+var server = require('./app');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
