@@ -1,0 +1,16 @@
+<!-- views/pages/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  </head>
+  <body class="container">
+    <h2>Loop</h2>
+
+    <ul>
+        <% getArtists().forEach(function(getArtists()) { %>
+            <li><%= getArtists() %> </li>
+        <% }); %>
+    </ul>
+  </body>
+</html>
