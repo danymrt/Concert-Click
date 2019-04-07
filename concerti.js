@@ -4,7 +4,7 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'appkey' ;
+var key = 'key' ;
 //var cantante='elisa';
 var id;
 var idEvent;
@@ -28,6 +28,7 @@ var cantante = server.getCantante();
 		}
 		else{
 			console.log(response.statusCode);
+			console.log("Nessun artista trovato!");
 		}
 		getConcerti();
 	}
@@ -47,19 +48,25 @@ function getConcerti(){
 		if (!error && response.statusCode == 200) {
 			//verificare se array = 0 in caso stampare non ci sono eventi!
 			var info = JSON.parse(body);
-			var array=info.resultsPage.results.event;
+			console.log("ciao");
 			var c=0;
-			for(var i=0; i<array.length; i++){
-				idEvent=array[i].id;
-				var location=array[i].venue.metroArea.displayName;
-				if(luogo==location){
-					c++;
-					var t=[idEvent,location,array[i].venue.displayName,array[i].start.date,array[i].start.datetime]
-					console.log(t);
+			if(info.resultsPage.results.event==undefined){
+				console.log("errore");
+			}
+			else{
+				var array=info.resultsPage.results.event;
+				for(var i=0; i<array.length; i++){
+					idEvent=array[i].id;
+					var location=array[i].venue.metroArea.displayName;
+					if(luogo==location){
+						c++;
+						var t=[idEvent,location,array[i].venue.displayName,array[i].start.date,array[i].start.datetime]
+						console.log(t);
+					}
 				}
 			}
 			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
-		}
+}
 		else{
 			console.log(response.statusCode);
 		}
