@@ -1,0 +1,43 @@
+<html>
+  <head>
+      <title>Login</title>
+  </head>
+
+  <body>
+    <h2>Loop</h2>
+
+      <div id= "cerca">
+        <form action="/dati" method="POST">
+          <ul>
+            <%for(var i=0; i<nameList.length; i++){%>
+              //fare if per selezionare solo un nome del cantante
+              <input type="checkbox" name="cantante" value=<%= nameList[i]%>>
+              <%= nameList[i] %>
+              <br>
+              <%}%>
+          </ul>
+
+           <h2>Inserisci la tua città</h2>
+				        <select name="citta" required>
+                      <option name="niente"selected></option>
+				              <option value="Aosta">Aosta</option>
+				              <option value="Turin">Torino</option>
+				              <option value="Milan">Milano</option>
+				              <option value="Bologna">Bologna</option>
+				              <option value="Ancona">Ancona</option>
+				              <option value="Florence">Firenze</option>
+				              <option value="Rome">Roma</option>
+				              <option value="Naples">Napoli</option>
+				              <option value="Bari">Bari</option>
+				              <option value="Padua">Padova</option>
+				              <option value="Messina">Messina</option>
+				              <option value="Pescara">Pescara</option>
+				              <option value="Verona">Verona</option>
+				              <option value="Rimini">Rimini</option>
+				              <option value="Acireale">Acireale</option>
+                </select>
+          <button id="cerca-button" onclick="invioDati()">Seleziona</button>
+          </form>
+      </div>
+  </body>
+  </html>
