@@ -4,11 +4,12 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'appkey' ;
+var key = 'j3fUYN8FLd3NZ95r' ;
 //var cantante='elisa';
 var id;
 var idEvent;
 var data=[];
+var datatime=[];
 var place=[];
 var app = express();
 var server = require('./app');
@@ -53,10 +54,9 @@ function getConcerti(req,res){
 				var location=array[i].venue.metroArea.displayName;
 				if(luogo==location){
 					c++;
-					data.push(array[i].start.datetime);
+					data.push(array[i].start.date);
+					datatime.push(array[i].start.datetime);
 					place.push(array[i].venue.displayName);
-					//var t=[idEvent,location,array[i].venue.displayName,array[i].start.date,array[i].start.datetime]
-					//console.log(t);
 				}
 			}
 			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
@@ -64,8 +64,14 @@ function getConcerti(req,res){
 		else{
 			console.log(response.statusCode);
 		}
-		res.render('pages/tre', {
+		console.log(datatime);
+		if(datatime[0]==null){
+			res.render('pages/tre', {
                 data: data, luogo:place});	
+		}else{
+				res.render('pages/tre', {
+                data: datatime, luogo:place});
+		}
 	}
 	request(options, callback);
 }
