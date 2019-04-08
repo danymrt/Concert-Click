@@ -19,8 +19,8 @@ var nameList = [];
 app.set('view engine', 'ejs');
 
 
-const appKey = 'appKey';
-const appSecret = 'appSecret';
+const appKey = 'appkey';
+const appSecret = 'appkey';
 
 let token = null;
 
@@ -131,7 +131,7 @@ app.get('/artists', function(req,res){
 
 
 })
-var id;
+
 app.post("/dati", function(req, res){
     console.log("Ricevuto una richiesta POST");
     // contenuto della richiesta
@@ -139,8 +139,7 @@ app.post("/dati", function(req, res){
     cantante= req.body.cantante;
     console.log(cantante);
     console.log(citta);
-    fileConc.getidCantante();
-    // password
+   	fileConc.getidCantante(req,res);
 });
   function getCantante(){
     return cantante;
@@ -149,8 +148,9 @@ app.post("/dati", function(req, res){
     return citta;
   }
 
+
 app.get('/start', function(req,res) {
-  res.sendFile('/home/biar/Desktop/Progetto RDC/Prove5/login1/login.html');
+  res.sendFile('/home/biar/Desktop/ProgettoRC/login.html');
 
 })
 
