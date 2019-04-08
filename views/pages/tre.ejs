@@ -1,0 +1,22 @@
+<html>
+  <head>
+      <title>Login</title>
+  </head>
+
+  <body>
+    <h2>Loop</h2>
+
+      <div id= "aggiungiConc">
+        <form action="/aggiungiConc" method="POST">
+          <ul>
+            <%for(var i=0; i<data.length; i++){%>
+              <input type="checkbox" name="evento" value="<%= data[i] %> <%= luogo[i] %>">
+              <%= data[i] %>   <%= luogo[i] %> 
+							<br>
+              <%}%>
+          </ul>
+					<button id="agg-button" onclick="invioDati()">Aggiungi al calendario</button>
+          </form>
+      </div>
+  </body>
+  </html>
