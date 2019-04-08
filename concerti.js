@@ -4,7 +4,7 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'j3fUYN8FLd3NZ95r' ;
+var key = 'key' ;
 //var cantante='elisa';
 var id;
 var idEvent;
