@@ -4,17 +4,19 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'key' ;
+var key = 'appkey' ;
 //var cantante='elisa';
 var id;
 var idEvent;
+var data=[];
+var place=[];
 var app = express();
 var server = require('./app');
-
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-function getidCantante(){
+function getidCantante(req,res){
 var cantante = server.getCantante();
 	var options = {
 		url : 'https://api.songkick.com/api/3.0/search/artists.json?apikey=' + key + '&query=' + cantante
@@ -24,21 +26,17 @@ var cantante = server.getCantante();
 			var info = JSON.parse(body);
 			id=info.resultsPage.results.artist[0].id;
 			console.log('Cantante: '+cantante+' Id: '+ id);
-			//getConcerti();
 		}
 		else{
 			console.log(response.statusCode);
-			console.log("Nessun artista trovato!");
 		}
-		getConcerti();
+		getConcerti(req,res);
 	}
 
 	request(options, callback);
 }
 
-function getConcerti(){
-	console.log(id);
-
+function getConcerti(req,res){
 	var luogo=server.getCitta();
 	var options = {
 	  url : 'https://api.songkick.com/api/3.0/artists/' + id + '/calendar.json?apikey=' + key
@@ -48,28 +46,26 @@ function getConcerti(){
 		if (!error && response.statusCode == 200) {
 			//verificare se array = 0 in caso stampare non ci sono eventi!
 			var info = JSON.parse(body);
-			console.log("ciao");
+			var array=info.resultsPage.results.event;
 			var c=0;
-			if(info.resultsPage.results.event==undefined){
-				console.log("errore");
-			}
-			else{
-				var array=info.resultsPage.results.event;
-				for(var i=0; i<array.length; i++){
-					idEvent=array[i].id;
-					var location=array[i].venue.metroArea.displayName;
-					if(luogo==location){
-						c++;
-						var t=[idEvent,location,array[i].venue.displayName,array[i].start.date,array[i].start.datetime]
-						console.log(t);
-					}
+			for(var i=0; i<array.length; i++){
+				idEvent=array[i].id;
+				var location=array[i].venue.metroArea.displayName;
+				if(luogo==location){
+					c++;
+					data.push(array[i].start.datetime);
+					place.push(array[i].venue.displayName);
+					//var t=[idEvent,location,array[i].venue.displayName,array[i].start.date,array[i].start.datetime]
+					//console.log(t);
 				}
 			}
 			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
-}
+		}
 		else{
 			console.log(response.statusCode);
 		}
+		res.render('pages/tre', {
+                data: data, luogo:place});	
 	}
 	request(options, callback);
 }
