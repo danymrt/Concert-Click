@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var citta = null;
 var cantante = null;
 var fileConc = require('./concerti');
+var fileEvento = require('./Insert');
 var nameList = [];
 //var fileApp = require('./app');
 // set the view engine to ejs
@@ -21,7 +22,7 @@ app.set('view engine', 'ejs');
 
 const appKey = 'appkey';
 const appSecret = 'appkey';
-
+var a_t='';
 let token = null;
 
 
@@ -97,7 +98,7 @@ app.get(
 
 app.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.sendFile('/home/biar/Desktop/ProgettoRC/quattro.html');
 });
 
 app.listen(8888, function(){
@@ -148,12 +149,53 @@ app.post("/dati", function(req, res){
     return citta;
   }
 
+app.post("/aggiungiConc", function(req, res){
+    console.log("Ricevuto una richiesta POST");
+    // contenuto della richiesta
+    info= req.body.evento;
+    console.log(info);
+		fileEvento.accessoGoogle(req,res);
+});
+
+function getEvento(){
+    return info;
+  }
 
 app.get('/start', function(req,res) {
   res.sendFile('/home/biar/Desktop/ProgettoRC/login.html');
 
 })
 
+app.get('/', function(req, res){
+  console.log("code taken");
+  
 
+  var formData = {
+    code: req.query.code,
+    client_id: 'appkey',
+    client_secret: 'appkey',
+    redirect_uri: 'http://localhost:8888',
+    grant_type: 'authorization_code',
+		
+  }
+
+
+  request.post({url:'https://www.googleapis.com/oauth2/v4/token', form: formData}, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('upload failed:', err);
+  } 
+  console.log('Upload successful!  Server responded with:', body);
+  var info = JSON.parse(body);
+  a_t = info.access_token;
+	//fileEvento.aggiungiEvento(req,res,a_t);
+	res.sendFile('/home/biar/Desktop/ProgettoRC/quattro.html');
+});
+});
+
+app.post("/aggiungiCal", function(req, res){
+    fileEvento.aggiungiEvento(req,res,a_t);
+});
+
+module.exports.getEvento = getEvento;
 module.exports.getCitta = getCitta;
 module.exports.getCantante = getCantante;
