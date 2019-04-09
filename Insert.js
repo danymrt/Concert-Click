@@ -7,10 +7,37 @@ var ws=require('ws');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function accessoGoogle(req, res){
-  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=client-id");
+  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=client_id");
+
 };
 
+function controllaEvento(req, res,a_t){
+    //var url='https://www.googleapis.com/calendar/v3/calendars/primary/events';
+    var options={
+  url:'https://www.googleapis.com/calendar/v3/calendars/primary/events',
+  headers: {
+    'Authorization': 'Bearer '+a_t,
+    }
+};
+    request(options, function callback(error, response, body){
+        if (!error && response.statusCode == 200){
+        var info = JSON.parse(body);
+        var lista=info.items;
+
+        if(lista!=null){
+            console.log("evento già aggiunto!!");
+
+            }
+        else{
+            aggiungiEvento(req,res,a_t);
+            }
+
+        }
+    });
+}
+
 function aggiungiEvento(req,res,a_t){
+
   var url= 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
   var info= server.getEvento();
 	var cantante=server.getCantante();
@@ -74,3 +101,4 @@ function aggiungiEvento(req,res,a_t){
 }
 module.exports.aggiungiEvento= aggiungiEvento;
 module.exports.accessoGoogle= accessoGoogle;
+module.exports.controllaEvento=controllaEvento;
