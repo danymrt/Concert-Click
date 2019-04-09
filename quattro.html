@@ -29,33 +29,17 @@
                        // quando viene aperta la connession inviamo un messagio di OK
                        // al server
                         // scrivo il messagio nella textbox e lo invio
-                        writeResponse("OK");
+                        //writeResponse("OK");
                         webSocket.send("Connessione stabilita");
                     };
       
                     webSocket.onmessage = function(event){
-                        writeResponse(event.data);
+                        alert(event.data);
                     };
       
                     webSocket.onclose = function(event){
-                        writeResponse("Connection closed");
+                        console.log("Connection closed");
                     };
-                }
-                
-                /**
-                 * Invia il contenuto della text input al server
-                 */
-                function send(){
-                    var text = document.getElementById("messageinput").value;
-                    webSocket.send(text);
-                }
-                
-                function closeSocket(){
-                    webSocket.close();
-                }
-      
-                function writeResponse(text){
-                    messages.innerHTML += "<br/>" + text;
                 }
                 
 						</script>

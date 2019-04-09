@@ -7,18 +7,25 @@ var ws=require('ws');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function accessoGoogle(req, res){
-  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=client_id");
+  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=id");
 
 };
 
-function controllaEvento(req, res,a_t){
+function controllaEvento(a_t,ws){
     //var url='https://www.googleapis.com/calendar/v3/calendars/primary/events';
-    var options={
+		var info= server.getEvento();
+		var d=info.split(" ")[0];
+		console.log(d);
+    if(d.length>11){
+			var data=d.split("T")[0];
+			console.log(data);
+		}
+	var options={
   url:'https://www.googleapis.com/calendar/v3/calendars/primary/events',
   headers: {
     'Authorization': 'Bearer '+a_t,
     }
-};
+	};
     request(options, function callback(error, response, body){
         if (!error && response.statusCode == 200){
         var info = JSON.parse(body);
@@ -26,17 +33,17 @@ function controllaEvento(req, res,a_t){
 
         if(lista!=null){
             console.log("evento già aggiunto!!");
-
+						ws.send("Evento già aggiunto!");
             }
         else{
-            aggiungiEvento(req,res,a_t);
+            aggiungiEvento(a_t,ws);
             }
 
         }
     });
 }
 
-function aggiungiEvento(req,res,a_t){
+function aggiungiEvento(a_t,ws){
 
   var url= 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
   var info= server.getEvento();
@@ -92,7 +99,8 @@ function aggiungiEvento(req,res,a_t){
   },function callback(error, response, body) {
   if (!error && response.statusCode == 200) {
     console.log(body);
-		console.log("evento aggiunto!")
+		console.log("evento aggiunto!");
+		ws.send("Evento aggiunto!")
     }
   else {
     console.log(error);
