@@ -1,17 +1,30 @@
 <html>
-  <head>
-      <title>Login</title>
-			<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  </head>
 
-  <body>
-      <div id= "login" STYLE=”position:absolute; top:100px; left:100px”>
-          <h2>Clicca qui per fare il login su Spotify e ottenere i concerti</h2>
-          <button id="login-button" class="btn btn-primary">Login con Spotify</button>
-      </div>
-  </body>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <head>
+      <!-- <p align=”center”> -->
+        <!-- <link href="foglio.css" rel="stylesheet" type="text/css" /> -->
+        <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> -->
+        <title align=”center”>Login</title>
+      <!-- </p> -->
+    </head>
+
+    <body style="background-color: rgba(0,0,0,0.4);">
+        <div class="a" >
+
+          <!-- <p align=”center”> -->
+            <h2>Clicca qui per fare il login su Spotify e ottenere i concerti</h2>
+          <!-- </p> -->
+            <button id="login-button" class="btn btn-primary">Login con Spotify</button>
+        </div>
+
+    <style>
+    div.a {
+            text-align: center;
+    }
+    </style>
+    </body>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
   <script>
       (function() {
         document.getElementById('login-button').addEventListener('click', function() {
