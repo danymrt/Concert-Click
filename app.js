@@ -22,8 +22,8 @@ var nameList = [];
 app.set('view engine', 'ejs');
 
 
-const appKey = 'bdef6ebb137540b5ab0fe8b16373d165';
-const appSecret = '1a3cadbff7664ab48feb974a142a461f';
+const appKey = 'appKey';
+const appSecret = 'appSecret';
 var a_t='';
 let token = null;
 
@@ -185,8 +185,8 @@ app.get('/', function(req, res){
 
   var formData = {
     code: req.query.code,
-    client_id: '829988985830-ognjcmsf1oebd5nqvssiofp68l6qn47b.apps.googleusercontent.com',
-    client_secret: 'vd6AzT0e5H428CG2ieX_y_RG',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
     redirect_uri: 'http://localhost:8888',
     grant_type: 'authorization_code',
 
