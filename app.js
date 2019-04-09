@@ -1,4 +1,4 @@
-//http://losviluppatore.it/i-websocket-comunicazione-asincrona-full-duplex-per-il-web/
+
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -22,8 +22,8 @@ var nameList = [];
 app.set('view engine', 'ejs');
 
 
-const appKey = 'appKey';
-const appSecret = 'appSecret';
+const appKey = 'appkey';
+const appSecret = 'appkey';
 var a_t='';
 let token = null;
 
@@ -31,11 +31,10 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
 wss.on('connection', function connection(ws){
-		console.log("ok");
+		console.log("Connessione stabilita con le websocket!");
 		ws.on('message', function incoming(message){
-			if(message=="OK!"){
-				fileEvento.aggiungiEvento(a_t);
-				ws.send("Evento aggiunto con successo sul calendario!");
+			if(message=="Connessione stabilita"){
+				fileEvento.controllaEvento(a_t,ws);
 			}
 		});
 });
@@ -185,8 +184,8 @@ app.get('/', function(req, res){
 
   var formData = {
     code: req.query.code,
-    client_id: 'client_id',
-    client_secret: 'client_secret',
+    client_id: 'appkey',
+    client_secret: 'appkey',
     redirect_uri: 'http://localhost:8888',
     grant_type: 'authorization_code',
 
