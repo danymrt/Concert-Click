@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Echo Web Socket</title>
+        </head>
+        <body> 
+            <div>
+								<button type="button" onclick="openSocket()">Sicuroo Aggiungi al calendario</button>
+						</div>
+								<div id="messages"></div>
+            </form>
+            <script type="text/javascript">
+								var webSocket;
+                var messages = document.getElementById("messages");
+                
+                function openSocket(){
+                    // Assicura che sia aperta un unica connessione
+                    if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
+                       writeResponse("Connesione WebSocket già stabilita");
+                        return;
+                    }
+                    // Creiamo una nuova istanza websocket
+                    webSocket = new WebSocket("ws://localhost:8888");
+                      
+                    /**
+                     * Facciamo il bind delle funzioni con gli eventi dei websocket
+                     */
+                    webSocket.onopen = function(event){
+                       // quando viene aperta la connession inviamo un messagio di OK
+                       // al server
+                        // scrivo il messagio nella textbox e lo invio
+                        writeResponse("OK");
+                        webSocket.send("Connessione stabilita");
+                    };
+      
+                    webSocket.onmessage = function(event){
+                        writeResponse(event.data);
+                    };
+      
+                    webSocket.onclose = function(event){
+                        writeResponse("Connection closed");
+                    };
+                }
+                
+                /**
+                 * Invia il contenuto della text input al server
+                 */
+                function send(){
+                    var text = document.getElementById("messageinput").value;
+                    webSocket.send(text);
+                }
+                
+                function closeSocket(){
+                    webSocket.close();
+                }
+      
+                function writeResponse(text){
+                    messages.innerHTML += "<br/>" + text;
+                }
+                
+						</script>
+        </body>
+    </html>
