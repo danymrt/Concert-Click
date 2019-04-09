@@ -1,3 +1,4 @@
+//http://losviluppatore.it/i-websocket-comunicazione-asincrona-full-duplex-per-il-web/
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -5,6 +6,7 @@ const request = require("request");
 const SpotifyStrategy = require("passport-spotify").Strategy;
 const http = require('http');
 const qs = require('querystring');
+const WebSocket = require('ws')
 var url = require('url');
 var path = require('path');
 var app = express();
@@ -20,12 +22,23 @@ var nameList = [];
 app.set('view engine', 'ejs');
 
 
-const appKey = 'appkey';
-const appSecret = 'appkey';
+const appKey = 'bdef6ebb137540b5ab0fe8b16373d165';
+const appSecret = '1a3cadbff7664ab48feb974a142a461f';
 var a_t='';
 let token = null;
 
+const server = http.createServer(app);
+const wss = new WebSocket.Server({server});
 
+wss.on('connection', function connection(ws){
+		console.log("ok");
+		ws.on('message', function incoming(message){
+			if(message=="OK!"){
+				fileEvento.aggiungiEvento(a_t);
+				ws.send("Evento aggiunto con successo sul calendario!");
+			}
+		});
+});
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
@@ -101,7 +114,7 @@ app.get('/logout', function(req, res) {
   res.sendFile('/home/biar/Desktop/ProgettoRC/quattro.html');
 });
 
-app.listen(8888, function(){
+server.listen(8888, function(){
   console.log('server attivo nella porta 8888');
 });
 
@@ -168,22 +181,22 @@ app.get('/start', function(req,res) {
 
 app.get('/', function(req, res){
   console.log("code taken");
-  
+
 
   var formData = {
     code: req.query.code,
-    client_id: 'appkey',
-    client_secret: 'appkey',
+    client_id: '829988985830-ognjcmsf1oebd5nqvssiofp68l6qn47b.apps.googleusercontent.com',
+    client_secret: 'vd6AzT0e5H428CG2ieX_y_RG',
     redirect_uri: 'http://localhost:8888',
     grant_type: 'authorization_code',
-		
+
   }
 
 
   request.post({url:'https://www.googleapis.com/oauth2/v4/token', form: formData}, function optionalCallback(err, httpResponse, body) {
   if (err) {
     return console.error('upload failed:', err);
-  } 
+  }
   console.log('Upload successful!  Server responded with:', body);
   var info = JSON.parse(body);
   a_t = info.access_token;
@@ -192,9 +205,11 @@ app.get('/', function(req, res){
 });
 });
 
-app.post("/aggiungiCal", function(req, res){
-    fileEvento.aggiungiEvento(req,res,a_t);
-});
+// app.post("/aggiungiCal", function(req, res){
+//     fileEvento.aggiungiEvento(req,res,a_t);
+// });
+
+
 
 module.exports.getEvento = getEvento;
 module.exports.getCitta = getCitta;
