@@ -1,43 +1,124 @@
 <html>
   <head>
-      <title>Login</title>
+      <title>Cantanti</title>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.js" type="text/javascript"></script>
+      <script>
+        $(document).ready(function() {
+            $("#cerca img").on("click", function(e) {
+              id = e.target.id.replace("img_","");
+              $("#button_"+id).prop('checked', true);
+              $("#cerca img").removeClass("selected");
+              $("#img_"+id).addClass('selected');
+            });
+        });
+      </script>
   </head>
 
-  <body>
-    <h2>Loop</h2>
+  <body style="background-color:#e4e9fc" >
 
-      <div id= "cerca">
+        <h2 align="center">Seleziona un cantate: </h2>
+
+      <div id= "cerca" class="dropdown" >
         <form action="/dati" method="POST">
           <ul>
             <%for(var i=0; i<nameList.length; i++){%>
-              //fare if per selezionare solo un nome del cantante
-              <input type="checkbox" name="cantante" value=<%= nameList[i]%>>
-              <%= nameList[i] %>
-              <br>
+              <li>
+              <input type="radio" name="cantante" id="button_<%= nameList[i].replace(" ","_").replace(".","_") %>" class="cantante" value="<%= nameList[i]%>"required/>
+              <%=nameList[i] %>
+              <img id="img_<%= nameList[i].replace(" ","_").replace(".","_")%>" src="<%=imageList[i]%>" />
+            </li>
               <%}%>
           </ul>
 
-           <h2>Inserisci la tua città</h2>
-				        <select name="citta" required>
-                      <option name="niente"selected></option>
-				              <option value="Aosta">Aosta</option>
-				              <option value="Turin">Torino</option>
-				              <option value="Milan">Milano</option>
-				              <option value="Bologna">Bologna</option>
-				              <option value="Ancona">Ancona</option>
-				              <option value="Florence">Firenze</option>
-				              <option value="Rome">Roma</option>
-				              <option value="Naples">Napoli</option>
-				              <option value="Bari">Bari</option>
-				              <option value="Padua">Padova</option>
-				              <option value="Messina">Messina</option>
-				              <option value="Pescara">Pescara</option>
-				              <option value="Verona">Verona</option>
-				              <option value="Rimini">Rimini</option>
-				              <option value="Acireale">Acireale</option>
-                </select>
-          <button id="cerca-button" onclick="invioDati()">Seleziona</button>
+          <h2>Inserisci la tua città</h2>
+               <select name="citta" class="citta" required>
+                     <option name="niente"><selected></option>
+                     <option value="Aosta">Aosta</option>
+                     <option value="Turin">Torino</option>
+                     <option value="Milan">Milano</option>
+                     <option value="Bologna">Bologna</option>
+                     <option value="Ancona">Ancona</option>
+                     <option value="Florence">Firenze</option>
+                     <option value="Rome">Roma</option>
+                     <option value="Naples">Napoli</option>
+                     <option value="Bari">Bari</option>
+                     <option value="Padua">Padova</option>
+                     <option value="Messina">Messina</option>
+                     <option value="Pescara">Pescara</option>
+                     <option value="Verona">Verona</option>
+                     <option value="Rimini">Rimini</option>
+                     <option value="Acireale">Acireale</option>
+               </select>
+          <button id="cerca-button" onclick="invioDati()" class="bottone" >Seleziona </button>
+
           </form>
       </div>
+      <style>
+      input[type="radio"] {
+        display: none;
+      }
+      #cerca img {
+        width: 100px;
+        border: 3px solid rgba(0,0,0,0.0);
+      }
+      #cerca img.selected {
+        border: 3px solid #000;
+      }
+      #cerca li {
+        display: inline-block;
+      }
+      /* Dropdown Button */
+    .citta {
+      display: inline-block;
+      color: black;
+      text-decoration: none;
+      padding: .5em 2em;
+      outline: none;
+      border-width: 2px 0;
+      border-style: solid none;
+      border-color: #cdd6f9 #000 #cdd6f9;
+      border-radius: 6px;
+      background: linear-gradient(#cdd6f9, #cdd6f9) #cdd6f9;
+      transition: 0.2s;
+    }
+
+    /* Dropdown button on hover & focus */
+    .citta:hover, .dropbtn:focus {
+      background-color: #cdd6f9;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+
+
+    }
+    select.citta:hover { background: linear-gradient(#9fb1f4, #9fb1f4) #9fb1f4; }
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .show {display:block;}
+        button.bottone {
+          display: inline-block;
+          color: black;
+          text-decoration: none;
+          padding: .5em 2em;
+          outline: none;
+          border-width: 2px 0;
+          border-style: solid none;
+          border-color: #cdd6f9 #000 #cdd6f9;
+          border-radius: 6px;
+          background: linear-gradient(#cdd6f9, #cdd6f9) #cdd6f9;
+          transition: 0.2s;
+        }
+        button.bottone:hover { background: linear-gradient(#9fb1f4, #9fb1f4) #9fb1f4; }
+
+        div {
+              text-align: left;
+              background: #e4e9fc;
+              margin: 0 auto;
+        }
+
+
   </body>
   </html>
