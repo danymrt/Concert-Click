@@ -16,7 +16,6 @@ var citta = null;
 var cantante = null;
 var fileConc = require('./concerti');
 var fileEvento = require('./Insert');
-var nameList = [];
 //var fileApp = require('./app');
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -126,6 +125,8 @@ function ensureAuthenticated(req, res, next) {
 // use res.render to load up an ejs view file
 
 app.get('/artists', function(req,res){
+	var imageList = [];
+	var nameList = [];
   var options = {
           url: 'https://api.spotify.com/v1/me/following?user_follow-modify=access_token&type=artist',
           headers: { 'Authorization': 'Bearer ' + token },
@@ -136,10 +137,11 @@ app.get('/artists', function(req,res){
         request.get(options, function(_error,_response, body) {
 					for(i=0; i<body.artists.items.length; i++){
           	nameList.push(body.artists.items[i].name);
+						imageList.push(body.artists.items[i].images[0].url);
 					}
 					console.log(nameList);
           res.render('pages/cerca', {
-                nameList: nameList});
+                nameList: nameList, imageList: imageList});
         });
 
 
