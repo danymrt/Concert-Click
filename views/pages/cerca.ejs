@@ -22,9 +22,8 @@
         <form action="/dati" method="POST">
           <ul>
             <%for(var i=0; i<nameList.length; i++){%>
-              <li>
+              <li data-nome="<%=nameList[i] %>">
               <input type="radio" name="cantante" id="button_<%= nameList[i].replace(" ","_").replace(".","_") %>" class="cantante" value="<%= nameList[i]%>"required/>
-              <%=nameList[i] %>
               <img id="img_<%= nameList[i].replace(" ","_").replace(".","_")%>" src="<%=imageList[i]%>" />
             </li>
               <%}%>
@@ -54,18 +53,69 @@
           </form>
       </div>
       <style>
+      body {
+        text-align: center;
+        font-family: sans-serif;
+      }
+      #cerca {
+        text-align: center;
+      }
       input[type="radio"] {
         display: none;
       }
       #cerca img {
-        width: 100px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 150px;
         border: 3px solid rgba(0,0,0,0.0);
+        vertical-align: middle;
+        font-size: 0;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+        opacity: 0.9;
+      }
+      #cerca img:hover {
+        border-color: rgba(0,0,0,0.5);
       }
       #cerca img.selected {
         border: 3px solid #000;
+        opacity: 1;
+      }
+      #cerca ul {
+        font-size: 0;
+        line-height: 0;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        min-width: 500px;
+        margin: 0 auto;
+        text-align: center;
       }
       #cerca li {
+        position: relative;
+        vertical-align: top;
+        overflow: hidden;
         display: inline-block;
+        font-size: 0;
+        line-height: 0;
+        margin: 0;
+        padding: 0;
+        width: 156px;
+        height: 156px;
+      }
+      #cerca li::after {
+        content: attr(data-nome);
+        position: absolute;
+        bottom: 3px;
+        left: 3px;
+        width: calc(100% - 6px);
+        white-space: nowrap;
+        font-size: 14px;
+        color: #fff;
+        background: rgba(0,0,0,0.6);
+        line-height: 1.4;
       }
       /* Dropdown Button */
     .citta {
