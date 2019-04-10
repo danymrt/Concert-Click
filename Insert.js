@@ -7,19 +7,25 @@ var ws=require('ws');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function accessoGoogle(req, res){
-  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=id");
+  res.redirect("https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar&response_type=code&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost:8888&client_id=client_id");
 
 };
 
 function controllaEvento(a_t,ws){
     //var url='https://www.googleapis.com/calendar/v3/calendars/primary/events';
+        var lista2=new Array();
+
 		var info= server.getEvento();
 		var d=info.split(" ")[0];
 		console.log(d);
-    if(d.length>11){
+        if(d.length>11){
 			var data=d.split("T")[0];
 			console.log(data);
+            dateagg=data;
 		}
+        else{
+            dateagg=d;
+        }
 	var options={
   url:'https://www.googleapis.com/calendar/v3/calendars/primary/events',
   headers: {
@@ -32,15 +38,41 @@ function controllaEvento(a_t,ws){
         var lista=info.items;
 
         if(lista!=null){
-            console.log("evento già aggiunto!!");
-						ws.send("Evento già aggiunto!");
+
+            var i;
+
+            for(i=0; i<lista.length; i++){
+                if(lista[i].start.date!=undefined){
+                    lista2.push(lista[i].start.date)
+                }
+                else{
+                    var datetime=lista[i].start.dateTime;
+                    var datanormale=datetime.split('T')[0];
+                    lista2.push(datanormale);
+                }
             }
-        else{
-            aggiungiEvento(a_t,ws);
+
+
+           if(lista2.includes(dateagg)){
+
+                console.log("evento già aggiunto!!");
+                    ws.send("Evento già aggiunto!");
             }
+            else{
+                aggiungiEvento(a_t,ws);
+
+            }
+}
+
+            else{
+                aggiungiEvento(a_t,ws);
+
+            }
+
 
         }
     });
+
 }
 
 function aggiungiEvento(a_t,ws){
