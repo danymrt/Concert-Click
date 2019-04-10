@@ -1,21 +1,50 @@
 <html>
   <head>
-      <title>Login</title>
+      <title>Concerti</title>
   </head>
 
-  <body>
-    <h2>Loop</h2>
+  <body style="background-color:#e4e9fc">
+    <h2 align="center">Seleziona una data:</h2>
 
       <div id= "aggiungiConc">
         <form action="/aggiungiConc" method="POST">
           <ul>
             <%for(var i=0; i<data.length; i++){%>
-              <input type="checkbox" name="evento" value="<%= data[i] %> <%= luogo[i] %>">
-              <%= data[i] %>   <%= luogo[i] %> 
+              <input type="radio" name="evento" value="<%= data[i] %> <%= luogo[i] %>" required>
+							<%if(data[i].length>11){%>
+									<%=luogo[i]%> il <%= data[i].split("T")[0]%>
+							<%}else{%>
+									<%=luogo[i]%> il <%= data[i]%>
+							<%}%>
 							<br>
               <%}%>
           </ul>
-					<button id="agg-button" onclick="invioDati()">Aggiungi al calendario</button>
+					<button id="agg-button" class="bottone" onclick="invioDati()">Accesso con Google per aggiungerlo al calendario!</button>
+					<style>
+						button.bottone {
+						  display: inline-block;
+						  color: black;
+						  text-decoration: none;
+						  padding: .5em 2em;
+						  outline: none;
+						  border-width: 2px 0;
+						  border-style: solid none;
+						  border-color: #468df2 #000 #468df2;
+						  border-radius: 6px;
+						  background: linear-gradient(#3985e9, #1575d6) #3985e9;
+						  transition: 0.2s;
+						}
+						button.bottone:hover { background: linear-gradient(#1575d6, #1575d6) #1575d6; }
+						button.bottono:active { background: linear-gradient(#006dcd, #006dcd) #006dcd; }
+						div {
+		          text-align: left;
+		          background: #e4e9fc;
+		          margin: 0 auto;
+		          position: absolute;
+		          left: 50%;
+		          margin-left: -185px
+    				}
+				</style>
           </form>
       </div>
   </body>

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
     <html>
         <head>
-            <title>Echo Web Socket</title>
+            <title>Calendrio</title>
         </head>
-        <body> 
+        <body onload="openSocket()"> 
             <div>
-								<button type="button" onclick="openSocket()">Sicuroo Aggiungi al calendario</button>
+								<button type="button" onclick="send()">Sicuroo Aggiungi al calendario</button>
 						</div>
 								<div id="messages"></div>
             </form>
-            <script type="text/javascript">
+        </body>
+				<script type="text/javascript">
 								var webSocket;
                 var messages = document.getElementById("messages");
                 
@@ -41,7 +42,8 @@
                         console.log("Connection closed");
                     };
                 }
-                
+								function send(){
+										webSocket.send("Aggiungi evento");
+								}                
 						</script>
-        </body>
     </html>
