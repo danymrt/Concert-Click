@@ -4,7 +4,7 @@
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
-var key = 'keys' ;
+var key = 'key' ;
 //var cantante='elisa';
 var id;
 var idEvent;
@@ -49,39 +49,36 @@ function getConcerti(req,res){
 			var info = JSON.parse(body);
 			var array=info.resultsPage.results.event;
 			var c=0;
-			if(array!=undefined){
-					for(var i=0; i<array.length; i++){
-						idEvent=array[i].id;
-						var location=array[i].venue.metroArea.displayName;
-						if(luogo==location){
-							c++;
-							data.push(array[i].start.date);
-							datatime.push(array[i].start.datetime);
-							place.push(array[i].venue.displayName);
-						}
-					}
-					console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
+			for(var i=0; i<array.length; i++){
+				idEvent=array[i].id;
+				var location=array[i].venue.metroArea.displayName;
+				if(luogo==location){
+					c++;
+					data.push(array[i].start.date);
+					datatime.push(array[i].start.datetime);
+					place.push(array[i].venue.displayName);
 				}
-				else{
-					console.log(response.statusCode);
-				}
-				console.log(datatime);
-				if(c==0){
-					res.sendFile('/home/biar/Desktop/ProgettoRC1/notevent.html');
-				}else{
-					if(datatime[0]==null){
-						res.render('pages/tre', {
-						          data: data, luogo:place});	
-					}else{
-							res.render('pages/tre', {
-						          data: datatime, luogo:place});
-					}
-				}
-			}else{
-					res.sendFile('/home/biar/Desktop/ProgettoRC1/notevent.html');			
 			}
+			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
+		}
+		else{
+			console.log(response.statusCode);
+		}
+		console.log(datatime);
+        console.log(c);
+        if(c==0){
+            res.sendFile('/home/biar/Desktop/RETI/ProgettoRC/notevent.html');
+            }
+        else{
+		if(datatime[0]==null){
+			res.render('pages/tre', {
+                data: data, luogo:place});
+		}else{
+				res.render('pages/tre', {
+                data: datatime, luogo:place});
 		}
 	}
+    }
 	request(options, callback);
 }
 module.exports.getConcerti= getConcerti;
