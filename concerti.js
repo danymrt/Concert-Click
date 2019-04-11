@@ -43,12 +43,21 @@ function getConcerti(req,res){
 	  url : 'https://api.songkick.com/api/3.0/artists/' + id + '/calendar.json?apikey=' + key
 	}
 	function callback(error, response, body){
+        var data=[];
+        var datatime=[];
+        var place=[];
 		//console.log(body);
 		if (!error && response.statusCode == 200) {
 			//verificare se array = 0 in caso stampare non ci sono eventi!
 			var info = JSON.parse(body);
+            var c=0;
 			var array=info.resultsPage.results.event;
-			var c=0;
+            console.log(array);
+            if(array==undefined){
+                res.sendFile('/home/biar/Desktop/RETI/ProgettoRC/notevent.html');
+                }
+            else{
+
 			for(var i=0; i<array.length; i++){
 				idEvent=array[i].id;
 				var location=array[i].venue.metroArea.displayName;
@@ -59,6 +68,7 @@ function getConcerti(req,res){
 					place.push(array[i].venue.displayName);
 				}
 			}
+        }
 			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
 		}
 		else{
