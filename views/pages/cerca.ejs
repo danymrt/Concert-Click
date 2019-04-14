@@ -1,6 +1,7 @@
 <html>
   <head>
       <title>Cantanti</title>
+      <script src="receive.js" type="text/javascript"></script>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.js" type="text/javascript"></script>
       <script>
         $(document).ready(function() {
@@ -15,15 +16,13 @@
   </head>
 
   <body style="background-color:#e4e9fc" >
-
-        <h2 align="center">Seleziona un cantate: </h2>
-
+       <h2 align="center">Seleziona un cantate: </h2>
       <div id= "cerca" class="dropdown" >
         <form action="/dati" method="POST">
           <ul>
             <%for(var i=0; i<nameList.length; i++){%>
               <li data-nome="<%=nameList[i] %>">
-              <input type="radio" name="cantante" id="button_<%= nameList[i].replace(" ","_").replace(".","_") %>" class="cantante" value="<%= nameList[i]%>"required/>
+ 							<input type="radio" name="cantante" id="button_<%= nameList[i].replace(" ","_").replace(".","_") %>" class="cantante" value="<%= nameList[i]%> <%=idList[i]%>" required/>
               <img id="img_<%= nameList[i].replace(" ","_").replace(".","_")%>" src="<%=imageList[i]%>" />
             </li>
               <%}%>
@@ -48,7 +47,7 @@
                      <option value="Rimini">Rimini</option>
                      <option value="Acireale">Acireale</option>
                </select>
-          <button id="cerca-button" onclick="invioDati()" class="bottone" >Seleziona </button>
+          <button id="cerca-button" onclick="getInfo()" class="bottone" >Seleziona </button>
 
           </form>
       </div>
@@ -117,7 +116,6 @@
         background: rgba(0,0,0,0.6);
         line-height: 1.4;
       }
-      /* Dropdown Button */
     .citta {
       display: inline-block;
       color: black;
@@ -131,13 +129,9 @@
       background: linear-gradient(#cdd6f9, #cdd6f9) #cdd6f9;
       transition: 0.2s;
     }
-
-    /* Dropdown button on hover & focus */
     .citta:hover, .dropbtn:focus {
       background-color: #cdd6f9;
     }
-
-    /* The container <div> - needed to position the dropdown content */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -145,8 +139,6 @@
 
     }
     select.citta:hover { background: linear-gradient(#9fb1f4, #9fb1f4) #9fb1f4; }
-
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
     .show {display:block;}
         button.bottone {
           display: inline-block;
