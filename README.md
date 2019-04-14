@@ -37,7 +37,7 @@ $ npm install ejs
 ```
 
 Le funzioni ausiliarie sono definite nei seguenti file : [app.js](https://github.com/daniela1195/ProgettoRC/blob/master/app.js), [insert.js](https://github.com/daniela1195/ProgettoRC/blob/master/Insert.js), [concerti.js](https://github.com/daniela1195/ProgettoRC/blob/master/concerti.js).
-La documentazione della API Rest implementate è nel file [API_Rest.md]().
+La documentazione della API Rest implementate è nel file [API_Rest.md](https://github.com/daniela1195/ProgettoRC/blob/master/API_Rest.md).
 
 ## Funzionamento
 Dopo l'avvio di app.js, il server è in ascolto sulla porta 8888. 
