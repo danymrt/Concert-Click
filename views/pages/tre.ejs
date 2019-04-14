@@ -4,10 +4,10 @@
   </head>
 
   <body style="background-color:#e4e9fc">
-    <h2 align="center">Seleziona una data:</h2>
+    <h2 align="center">Seleziona una data per <%=cantante%>:</h2>
 
       <div id= "aggiungiConc">
-        <form action="/aggiungiConc" method="POST">
+        <form action="/aggiungiConcerto" method="POST">
           <ul>
             <%for(var i=0; i<data.length; i++){%>
               <input type="radio" name="evento" value="<%= data[i] %> <%= luogo[i] %>" required>
@@ -23,7 +23,7 @@
 					<style>
 						button.bottone {
 						  display: inline-block;
-						  color: black;
+						  color: white;
 						  text-decoration: none;
 						  padding: .5em 2em;
 						  outline: none;
@@ -45,7 +45,7 @@
 		          margin-left: -185px
     				}
 				</style>
-          </form>
+        </form>
       </div>
   </body>
   </html>
