@@ -42,9 +42,10 @@ La documentazione della API Rest implementate è nel file [API_Rest.md]().
 ## Funzionamento
 Dopo l'avvio di app.js, il server è in ascolto sulla porta 8888. 
 
-Digitando nel browser http://localhost:8888/start si verrà reindirizzati alla pagina inziale login.ejs. Una volta premuto il bottone partirà il processo di autenticazione su Spotify tramite il protocollo OAuth. Grazie agli scopes inseriti nella richiesta OAuth saremo in grado di ottenere la lista di artisti seguiti dall'utente, l'indirizzo email e le informazioni sull'abbonamento. Ottenuti questi, si aprirà la pagina cerca.ejs dove verranno mostrate le immagini dei rispettivi artisti e un elenco delle possibili città da dover selezionare. 
+Digitando nel browser http://localhost:8888/start si verrà reindirizzati alla pagina inziale login.ejs. Una volta premuto il bottone, partirà il processo di autenticazione su Spotify tramite il protocollo OAuth. Grazie agli scopes inseriti nella richiesta OAuth saremo in grado di ottenere la lista di artisti seguiti dall'utente, l'indirizzo email e le informazioni sull'abbonamento. Ottenuti questi, si aprirà la pagina cerca.ejs dove verranno mostrate le immagini dei rispettivi artisti e un elenco delle possibili città da dover selezionare. 
 
-Una volta ottenute queste informazioni, lato server si calcolerà la top track del rispettivo artista e verrà memorizzata in un file .txt tramite l'utilizzo di RabbitMQ.
+Una volta ottenute queste informazioni, lato server si calcolerà la top track del rispettivo artista che verrà memorizzata in un file .txt tramite l'utilizzo di RabbitMQ.
+Inoltre attraverso le API fornite da SongKick potremmo ricavare dettagli sui rispettvi eventi.
 
 A questo punto, lato client, se per il cantante non sono disponibili dei concerti verrà fatto un redirect su quattro.ejs, al suo interno si potrà tornare alla pagina precedente per scegliere un nuovo artista (attraverso un apposito bottone), oppure  ascoltare gli estratti delle top tracks del cantante. 
 
