@@ -1,11 +1,8 @@
-//inserire nome utente nella pagina cerca.html
-//bottone carino
-//far in modo che quando si attivi il server parta direttamente
 var express = require('express');
 var request = require('request');
 var bodyParser = require("body-parser");
 var key = 'key' ;
-//var cantante='elisa';
+var fs=require('fs');
 var id;
 var idEvent;
 var data=[];
@@ -13,12 +10,11 @@ var datatime=[];
 var place=[];
 var app = express();
 var server = require('./app');
-var fileRmq= require('./receive');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-function getidCantante(req,res){
+/*funzione che ottiene l'id del cantante dal sito SongKick*/
+function getidCantante(req,res, cantante){
 	var options = {
 		url : 'https://api.songkick.com/api/3.0/search/artists.json?apikey=' + key + '&query=' + cantante
 	}
@@ -31,64 +27,74 @@ function getidCantante(req,res){
 		else{
 			console.log(response.statusCode);
 		}
-		getConcerti(req,res);
+		getConcerti(req,res,cantante);
 	}
-
 	request(options, callback);
 }
 
-function getConcerti(req,res){
-	var cantante = server.getCantante();
+/*funzione che ottiene i concerti disponibili per il cantante selezionato*/
+function getConcerti(req,res,cantante){
 	var luogo=server.getCitta();
 	var options = {
 	  url : 'https://api.songkick.com/api/3.0/artists/' + id + '/calendar.json?apikey=' + key
 	}
 	function callback(error, response, body){
-        var data=[];
-        var datatime=[];
-        var place=[];
-		//console.log(body);
-		if (!error && response.statusCode == 200) {
-			//verificare se array = 0 in caso stampare non ci sono eventi!
+		var data=[];
+    var datatime=[];
+    var place=[];
+		if (!error && response.statusCode == 200) {			
 			var info = JSON.parse(body);
-            var c=0;
 			var array=info.resultsPage.results.event;
-            if(array==undefined){
-                res.sendFile('/home/biar/Desktop/ProgettoRC/notevent.html');
-                }
-            else{
-
-			for(var i=0; i<array.length; i++){
-				idEvent=array[i].id;
-				var location=array[i].venue.metroArea.displayName;
-				if(luogo==location){
-					c++;
-					data.push(array[i].start.date);
-					datatime.push(array[i].start.datetime);
-					place.push(array[i].venue.displayName);
+			var c=0;
+			if(array!=undefined){
+				for(var i=0; i<array.length; i++){
+					idEvent=array[i].id;
+					var location=array[i].venue.metroArea.displayName;
+					if(luogo==location){
+						c++;
+						data.push(array[i].start.date);
+						datatime.push(array[i].start.datetime);
+						place.push(array[i].venue.displayName);
+					}
 				}
 			}
-        }
 			console.log('In '+ luogo + ' ci sono: ' + c + ' eventi!');
 		}
 		else{
 			console.log(response.statusCode);
 		}
-		console.log(datatime);
-        console.log(c);
-        if(c==0){
-            res.sendFile('/home/biar/Desktop/ProgettoRC/notevent.html');
-            }
-        else{
-		if(datatime[0]==null){
-			res.render('pages/tre', {
-                data: data, luogo:place});
-		}else{
+    if(c==0){
+			fs.readFile('/home/biar/Desktop/ProgettoRC/canzoni.txt','utf8',function(err1,canzoni){
+					if(err1){
+						console.log(err1);
+					}else{
+						fs.readFile('/home/biar/Desktop/ProgettoRC/estratto.txt','utf8',function(err2,estratto){
+							if(err2){
+								console.log(err2);
+							}else{
+								fs.readFile('/home/biar/Desktop/ProgettoRC/immagini.txt','utf8',function(err3,img){
+								if(err3){
+									console.log(err3);
+								}else{
+									console.log(estratto);
+									res.render('pages/quattro',{
+										t:'Non ci sono eventi',canzone: canzoni, estratto: estratto, img: img,cantante:cantante});
+									}
+								});
+							}
+						});
+					}			
+			});
+    }else{
+			if(datatime[0]==null){
 				res.render('pages/tre', {
-                data: datatime, luogo:place});
+		              data: data, luogo:place, cantante: cantante});
+			}else{
+					res.render('pages/tre', {
+		              data: datatime, luogo:place, cantante: cantante});
+			}
 		}
-	}
-    }
+  }
 	request(options, callback);
 }
 module.exports.getConcerti= getConcerti;
