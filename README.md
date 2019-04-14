@@ -53,3 +53,8 @@ Altrimenti, nel caso in cui ci siano concerti, verrà fatto un redirect su tre.e
 Successivamente verrà data la possibilità di scegliere un altro artista (tramite un redirect a cerca.ejs) oppure di confermare l'aggiunta dell'evento al calendario.
 
 Nel caso in cui l'utente non avrà impegni per quella data si avrà una modifica del calendario altrimenti sarà notificata la non riuscita dell'operazione sul browser e mostrati in entrambi i casi gli estratti della top tracks dell'artista.
+
+##### Autori
+Daniela Moretti
+Francesca Peduzzi
+Francesca Pellecchia
