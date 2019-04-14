@@ -1,0 +1,50 @@
+<html>
+
+    <head>
+        <title align=”center”>Login</title>
+    </head>
+
+    <body style="background-color:#e4e9fc" align="center">
+        <div class="a" >  
+						<h1 align='center'>Concert Click</h1>
+						<p><i>Cerca i concerti dei tuoi cantanti preferiti e aggiungili al calendario</i></p>   
+            <p><i>Clicca qui per fare il login su Spotify e ottenere i concerti</i></p>
+            <button id="login-button" class="bottone">Login con Spotify</button>
+        </div>
+    	<style>
+		    button.bottone {
+		      display: inline-block;
+		      color: white;
+		      text-decoration: none;
+		      padding: .5em 2em;
+		      outline: none;
+		      border-width: 2px 0;
+		      border-style: solid none;
+		      border-color: #468df2 #000 #468df2;
+		      border-radius: 6px;
+		      background: linear-gradient(#3985e9, #1575d6) #3985e9;
+		      transition: 0.2s;
+		    }
+		    button.bottone:hover { background: linear-gradient(#1575d6, #1575d6) #1575d6; }
+		    button.bottono:active { background: linear-gradient(#006dcd, #006dcd) #006dcd; }
+		    div {
+		          text-align: center;
+		          background: #e4e9fc;
+		          margin: 0 auto;
+		          position: absolute;
+		          top: 40%;
+		          left: 30%;
+		          margin-top: -100px;
+		          margin-left: 0px
+		  	}
+
+  	</style>
+	</body>
+  <script>
+      (function() {
+        document.getElementById('login-button').addEventListener('click', function() {
+            window.location = 'http://localhost:8888/auth/spotify';
+          }, false);
+      })();
+  </script>
+</html>
