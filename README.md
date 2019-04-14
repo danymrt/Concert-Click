@@ -1,5 +1,5 @@
 # Progetto RC
-Progetto per il corso 2018/19 di Reti di Calcolatori tenuto dal prof. Andrea Vitaletti presso La Sapienza Università di Roma.
+Progetto per il corso di Reti di Calcolatori 2018/19 tenuto dal prof. Andrea Vitaletti presso La Sapienza Università di Roma.
 
 ## Requisiti
 * Il servizio REST deve offrire delle API documentate
@@ -30,10 +30,16 @@ $ npm install body-parser
 $ npm install request
 $ npm install amqp
 $ npm install amqplib
+$ npm install ejs
 ```
 
 Le funzioni ausiliarie sono definite nei seguenti file : [app.js](https://github.com/daniela1195/ProgettoRC/blob/master/app.js), [insert.js](https://github.com/daniela1195/ProgettoRC/blob/master/Insert.js), [concerti.js](https://github.com/daniela1195/ProgettoRC/blob/master/concerti.js).
 La documentazione della API Rest implementate è nel file [API_Rest.md]().
 
-## Avvio
-Il server è in ascolto sulla porta 8888. Digitando nel browswer http://localhost:8888/start si verrà reinderizzati alla pagina inziale di login.
+## Funzionamento
+Dopo l'avvio di app.js il server è in ascolto sulla porta 8888. Digitando nel browswer http://localhost:8888/start si verrà reinderizzati alla pagina inziale login.ejs. Una volta premuto il bottone partirà il processo di autenticazione su Spotify tramite il protocollo OAuth. Grazie agli scopes inseriti nella richiesta OAuth saremo in grado di ottenere la lista di artisti seguiti dall'utente, l'indirizzo email e le informazioni sull'abbonamento. Ottenuti questi, si aprirà la pagina cerca.ejs dove verranno mostrate le immagini dei rispettivi artisti e un elenco delle possibili città da dover selezionare. 
+Una volta ottenute queste informazioni, lato server si calcolerà la top track del rispettivo artista e verrà memorizzata in un file .txt tramite l'utilizzo di RabbitMQ.
+A questo punto, lato client, se per il cantante non sono disponibili dei concerti verrà fatto un redirect su quattro.ejs, al suo interno si potrà tornare alla pagina precedente per scegliere un nuovo artista (attraverso un apposito bottone), oppure  ascoltare gli estratti delle top tracks del cantante. 
+Altrimenti, nel caso in cui ci siano concerti, verrà fatto un redirect su tre.ejs. Qui verranno mostrate le date e i luoghi da selezionare tramite checkbox. Una volta premuto il bottone partirà il processo di autenticazione su Google Calendar tramite il protocollo OAuth, grazie a cui saremo in grado di leggere e modificare il calendario dell'utente.
+Successivamente verrà data la possibilità di scegliere un altro artista (tramite un redirect a cerca.ejs) oppure di confermare l'aggiunta dell'evento al calendario.
+Nel caso in cui l'utente non avrà impegni per quella data si avrà una modifica del calendario altrimenti sarà notificata la non riuscita dell'operazione sul browser e mostrati in entrambi i casi gli estratti della top tracks dell'artista.
