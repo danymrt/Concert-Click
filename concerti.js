@@ -13,12 +13,12 @@ var datatime=[];
 var place=[];
 var app = express();
 var server = require('./app');
+var fileRmq= require('./receive');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 function getidCantante(req,res){
-var cantante = server.getCantante();
 	var options = {
 		url : 'https://api.songkick.com/api/3.0/search/artists.json?apikey=' + key + '&query=' + cantante
 	}
@@ -38,6 +38,7 @@ var cantante = server.getCantante();
 }
 
 function getConcerti(req,res){
+	var cantante = server.getCantante();
 	var luogo=server.getCitta();
 	var options = {
 	  url : 'https://api.songkick.com/api/3.0/artists/' + id + '/calendar.json?apikey=' + key
@@ -52,9 +53,8 @@ function getConcerti(req,res){
 			var info = JSON.parse(body);
             var c=0;
 			var array=info.resultsPage.results.event;
-            console.log(array);
             if(array==undefined){
-                res.sendFile('/home/biar/Desktop/RETI/ProgettoRC/notevent.html');
+                res.sendFile('/home/biar/Desktop/ProgettoRC/notevent.html');
                 }
             else{
 
@@ -77,7 +77,7 @@ function getConcerti(req,res){
 		console.log(datatime);
         console.log(c);
         if(c==0){
-            res.sendFile('/home/biar/Desktop/RETI/ProgettoRC/notevent.html');
+            res.sendFile('/home/biar/Desktop/ProgettoRC/notevent.html');
             }
         else{
 		if(datatime[0]==null){
