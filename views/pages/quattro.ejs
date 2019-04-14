@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Calendario</title>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.js" type="text/javascript"></script>
+            <script type="text/javascript">
+			  				function goBack() {
+									window.location = 'http://localhost:8888/artists';
+			  					}
+						</script>
+        </head>
+				<body style="background-color:#e4e9fc" >
+					<% if(t=='Non ci sono eventi'){ %>
+						<div>
+							<h2>Al momento non ci sono concerti per <%= cantante%> </h2>
+							<button id="back-button" class="bottone" onclick="goBack();">Torna agli artisti</button>
+							<h3 align="center"> Puoi comunque ascoltare le sue canzoni più popolari </h3>
+						</div>
+					<% }%>
+					<form action="/aggiungiCalendario" method="POST"> 
+							<div id="quattro">
+							<% if(t!=''){ %>
+								<% if(t=="Evento aggiunto"){ %>
+									<h2 align="center">L'evento è stato aggiunto!</h2>
+									<h3 align="center">Preparati ascoltando le canzoni più popolari di <%=cantante%></h3>
+								<% } else if(t=="Evento già aggiunto") { %>
+									<h2 align="center">Ci dispiace quel giorno hai già un impegno!</h2>
+									<h3 align="center">Puoi comunque ascoltare le canzoni più popolari di <%=cantante%></h3>
+								<% }%>
+							<ul>
+								<% var lc= canzone.split("\n") %> <% var le=estratto.split("\n") %> <% var li=img.split("\n") %>
+								<%for(var i=0; i<10; i++){%>
+									<li data-nome="<%= lc[i]%>">
+										<%= lc[i]%>
+										<img src="<%= li[i]%>" >
+										<%if(le[i]!= null){ %>
+											<audio controls id="audio">
+												<source src="<%= le[i]%>" type="audio/mp3">
+											</audio>
+										<%}%>
+									</li>
+								<%}%>
+							</ul>
+							<%}else if(t==''){%>
+								<h2 align="center">Sei sicuro di voler aggiungere il concerto di <%=cantante%> ?</h2>
+								<button id="cerca-button" class="bottone" > Si, aggiungi l'evento al mio calendario </button>
+							<%}%>
+							</div>
+					</form>
+					<% if(t==''){ %>
+						<div id='vuota'></div>
+						<div>
+						<button id="back-button" class="bottone" onclick="goBack();">No, voglio scegliere un altro cantante </button>
+						</div>
+					<% }%>
+			<style>
+			body {
+				text-align: center;
+				font-family: sans-serif;
+			  }
+			  #quattro {
+				text-align: center;
+			  }
+			  input[type="radio"] {
+				display: none;
+			  }
+			  #quattro img {
+				position: absolute;
+				bottom: 15px;
+				left: 0;
+				width: 174px;
+				border: 3px solid rgba(0,0,0,0.0);
+				vertical-align: middle;
+				font-size: 0;
+				line-height: 0;
+				margin: 0;
+				padding: 0;
+				opacity: 0.9;
+			  }
+			  
+			  #quattro ul {
+				font-size: 0;
+				line-height: 0;
+				padding: 0;
+				margin: 0;
+				width: 100%;
+				min-width: 500px;
+				margin: 0 auto;
+				text-align: center;
+			  }
+			  #quattro li {
+				position: relative;
+				vertical-align: top;
+				overflow: hidden;
+				display: inline-block;
+				font-size: 0;
+				line-height: 0;
+				margin: 0;
+				padding: 0;
+				width: 180px;
+				height: 200px;
+			  }
+			  #quattro li::after {
+				content: attr(data-nome);
+				position: absolute;
+				bottom: 3px;
+				left: 3px;
+				width: calc(100% - 6px);
+				white-space: nowrap;
+				font-size: 11.5px;
+				color: #fff;
+				background: rgba(0,0,0,0.6);
+				line-height: 1.3;
+			  }
+			  #quattro audio {
+				position: absolute;
+				top: 154px;
+				bottom: 3px;
+				left: 3px;
+				width: calc(100% - 6px);
+				white-space: nowrap;
+				font-size: 11.5px;
+				color: #fff;
+				background: rgba(0,0,0,0);
+				line-height: 1.4;
+			  }
+			  #vuota{
+				  height: 5px;
+				  weight: 5px
+			  }
+            button.bottone {
+              display: inline-block;
+              color: white;
+              text-decoration: none;
+              padding: .5em 2em;
+              outline: none;
+              border-width: 2px 0;
+              border-style: solid none;
+              border-color: #468df2 #000 #468df2;
+              border-radius: 6px;
+              background: linear-gradient(#3985e9, #1575d6) #3985e9;
+              transition: 0.2s;
+            }
+            button.bottone:hover { background: linear-gradient(#1575d6, #1575d6) #1575d6; }
+            button.bottone:active { background: linear-gradient(#006dcd, #006dcd) #006dcd; }
+            div {
+                  text-align: center;
+                  background: #e4e9fc;
+                  margin: 0 auto;
+                  top: 50%;
+          }
+            </style>
+        </body>
+    </html>
+
+
