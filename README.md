@@ -34,6 +34,7 @@ $ npm install request
 $ npm install amqp
 $ npm install amqplib
 $ npm install ejs
+$ npm install passport-spotify
 ```
 
 Le funzioni ausiliarie sono definite nei seguenti file : [app.js](https://github.com/daniela1195/ProgettoRC/blob/master/app.js), [insert.js](https://github.com/daniela1195/ProgettoRC/blob/master/Insert.js), [concerti.js](https://github.com/daniela1195/ProgettoRC/blob/master/concerti.js).
